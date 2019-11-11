@@ -4,7 +4,8 @@ const actionModel = require("./actionModel.js");
 const projectModel = require("../projects/projectModel.js");
 const projectRouter = require("../projects/projectRouter.js");
 
-router.use("/:id/projects", projectRouter);
+//router.use("/:id/projects", projectRouter);
+// router.use("/:id/actions", actionRouter);
 
 router.post("/", (req, res) => {
   const body = req.body;
@@ -21,7 +22,7 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  actionModel.getById(id).then(action => {
+  actionModel.get(id).then(action => {
     res.json(action);
   });
 });

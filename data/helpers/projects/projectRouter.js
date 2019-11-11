@@ -1,10 +1,11 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const projectModel = require("../projects/projectModel.js");
-const actionModel = require("./actionModel.js");
+const actionModel = require("../actions/actionModel.js");
+const actionRouter = require("../actions/actionRouter.js");
 const projectRouter = require("../projects/projectRouter.js");
-router.use("/:id/projects", projectRouter);
-router.use("/:id/actions", actionRouter);
+// //router.use("/projects/:id", projectRouter);
+// router.use("/actions/id", actionRouter);
 
 router.post("/", (req, res) => {
   const body = req.body;
@@ -14,19 +15,31 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  projectModel.get().then(projects => {
+  actionModel.get().then(projects => {
     res.status(200).json(projects);
   });
 });
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  projectModel.getById(id).then(project => {
-    res.json(project);
-  });
+  projectModel
+    .get(id)
+    .then(project => {
+      res.status(200).json(project);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "internal server error" });
+    });
 });
 
-router.get("/:id", (req, res) => {
+// router.get("/:id", (req, res) => {
+//   const id = req.params.id;
+//   actionModel.getById(id).then(project => {
+//     res.json(project);
+//   });
+// });
+
+router.get("/:id/actions", (req, res) => {
   const id = req.params.id;
   projectModel.getProjectActions(id).then(project => {
     res.json(project);
