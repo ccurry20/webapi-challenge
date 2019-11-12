@@ -26,13 +26,35 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+Middleware – Functions that get the request and response objects and can operate on them and
+either return the response or call the next middleware in the pipeline.
+
+Routing - A way to select which request handler function is executed based on the URL visited
+and the HTTP method used. Provides a way to break an application into smaller parts based on
+the route.
+
 - [ ] Describe Middleware?
+
+Functions that get the request and response objects and can operate on them and either return
+the response or call the next middleware in the pipeline.
 
 - [ ] Describe a Resource?
 
+The fundamental concept in any RESTful API is the resource. A resource is an object with a type, associated data, relationships to other resources, and a set of methods that operate on it. It is similar to an object instance in an object-oriented programming language, with the important difference that only a few standard methods are defined for the resource (corresponding to the standard HTTP GET, POST, PUT and DELETE methods), while an object instance typically has many methods.
+
+- resources are accessible via a unique URI.
+- resources can have multiple representations.
+- management of resources is done via HTTP methods.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+Sending back a 200 OK status code communicates to the client making the request that the
+operation was successful
+
 - [ ] How can we partition our application into sub-applications?
+
+By using Express Routers. It provides a way to break an application into smaller parts based on
+the route.
 
 ## Project Setup
 
