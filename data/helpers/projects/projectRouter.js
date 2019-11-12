@@ -7,7 +7,7 @@ const projectRouter = require("../projects/projectRouter.js");
 // //router.use("/projects/:id", projectRouter);
 // router.use("/actions/id", actionRouter);
 
-router.post("/", validateProjectId, validatePost, (req, res) => {
+router.post("/", validatePost, (req, res) => {
   const body = req.body;
   projectModel
     .insert(body)
@@ -19,7 +19,7 @@ router.post("/", validateProjectId, validatePost, (req, res) => {
     });
 });
 
-router.get("/", validateProjectId, validatePost, (req, res) => {
+router.get("/", (req, res) => {
   actionModel
     .get()
     .then(projects => {
@@ -30,7 +30,7 @@ router.get("/", validateProjectId, validatePost, (req, res) => {
     });
 });
 
-router.get("/:id", validateProjectId, validatePost, (req, res) => {
+router.get("/:id", validateProjectId, (req, res) => {
   const id = req.params.id;
   projectModel
     .get(id)
@@ -49,7 +49,7 @@ router.get("/:id", validateProjectId, validatePost, (req, res) => {
 //   });
 // });
 
-router.get("/:id/actions", validateProjectId, validatePost, (req, res) => {
+router.get("/:id/actions", validateProjectId, (req, res) => {
   const id = req.params.id;
   projectModel
     .getProjectActions(id)
@@ -61,7 +61,7 @@ router.get("/:id/actions", validateProjectId, validatePost, (req, res) => {
     });
 });
 
-router.delete("/:id", validateProjectId, validatePost, (req, res) => {
+router.delete("/:id", validateProjectId, (req, res) => {
   const id = req.params.id;
   projectModel
     .remove(id)
@@ -87,11 +87,13 @@ router.put("/:id", validateProjectId, validatePost, (req, res) => {
 });
 
 function validateProjectId(req, res, next) {
-  const id = req.params.id;
+  //const id = req.params.id;
+  const id = req.body;
   projectModel.get(id).then(project => {
     if (!project) {
       res.status(400).json({ message: "project id not found" });
     } else {
+      req.project = project;
       next();
     }
   });
