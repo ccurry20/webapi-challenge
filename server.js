@@ -14,8 +14,8 @@ server.use("/projects", projectRouter);
 // server.use("/actions", actionModel);
 // server.use("/projects", projectModel);
 
-server.use("/", (req, res) => res.send("API up and running!"));
+//server.use("/", (req, res) => res.send("API up and running!"));
 
-server.listen(8000, () => console.log("API running on port 8000"));
+//server.listen(8000, () => console.log("API running on port 8000"));
 
 module.exports = server;

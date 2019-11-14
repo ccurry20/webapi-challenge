@@ -12,13 +12,23 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+// require("dotenv").config();
+// const server = require("./server.js");
+// const port = process.env.PORT || 8000;
+
+// server.listen(port, () => {
+//   console.log(`n** API on port ${port}**/n`);
+// });
+
 require("dotenv").config();
 const server = require("./server.js");
-const port = process.env.PORT;
 
-server.listen(port, () => {
-  console.log(`n** API on port ${port}**/n`);
+//const { PORT } = process.env;
+const port = process.env.PORT || 9000;
+
+server.listen(PORT, () => {
+  console.log(`::: Server listening on http://localhost:${port} :::`);
 });
 
-module.exports = server;
-module.exports = router;
+//module.exports = server;
+//module.exports = router;

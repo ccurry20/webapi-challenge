@@ -7,7 +7,7 @@ const projectRouter = require("../projects/projectRouter.js");
 //router.use("/:id/projects", projectRouter);
 // router.use("/:id/actions", actionRouter);
 
-router.post("/", validateActionId, validateActionPost, (req, res) => {
+router.post("/", validateActionPost, (req, res) => {
   const body = req.body;
   actionModel
     .insert(body)
@@ -19,7 +19,7 @@ router.post("/", validateActionId, validateActionPost, (req, res) => {
     });
 });
 
-router.get("/", validateActionId, validateActionPost, (req, res) => {
+router.get("/", validateActionPost, (req, res) => {
   actionModel
     .get()
     .then(actions => {
@@ -30,7 +30,7 @@ router.get("/", validateActionId, validateActionPost, (req, res) => {
     });
 });
 
-router.get("/:id", validateActionId, validateActionPost, (req, res) => {
+router.get("/:id", validateActionId, (req, res) => {
   const id = req.params.id;
   actionModel
     .get(id)
@@ -42,7 +42,7 @@ router.get("/:id", validateActionId, validateActionPost, (req, res) => {
     });
 });
 
-router.delete("/:id", validateActionId, validateActionPost, (req, res) => {
+router.delete("/:id", validateActionId, (req, res) => {
   const id = req.params.id;
   actionModel
     .remove(id)
@@ -54,7 +54,7 @@ router.delete("/:id", validateActionId, validateActionPost, (req, res) => {
     });
 });
 
-router.put("/:id", validateActionId, validateActionPost, (req, res) => {
+router.put("/:id", validateActionId, (req, res) => {
   const id = req.params.id;
   const body = req.body;
   actionModel
@@ -80,9 +80,20 @@ function validateActionId(req, res, next) {
 
 function validateActionPost(req, res, next) {
   const body = req.body;
-  if (!body.project.id || !body.description || !body.notes) {
+  if (!body.project_id || !body.description || !body.notes) {
     res.status(400).json({ message: "missing required text field" });
   } else {
+    body.project_id
+      ? projectModel
+          .get(body.project_id)
+          .then(project => {
+            res.json(project);
+          })
+
+          // .catch(err => {
+          //   res.status(404).json({ err: "project id not found" });
+          .catch(err)
+      : res.status(500).json({ message: "internal server error", error: err });
     next();
   }
 }
