@@ -53,8 +53,8 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
   const id = req.params.id;
   projectModel
     .getProjectActions(id)
-    .then(project => {
-      res.json(project);
+    .then(actions => {
+      res.json(actions);
     })
     .catch(err => {
       res.status(500).json({ error: "internal server error" });

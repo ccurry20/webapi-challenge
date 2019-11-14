@@ -1,6 +1,5 @@
 
-{ PORT }=8000
-export PORT=8000
+
 # Logs
 logs
 *.log

@@ -83,6 +83,17 @@ function validateActionPost(req, res, next) {
   if (!body.project_id || !body.description || !body.notes) {
     res.status(400).json({ message: "missing required text field" });
   } else {
+    body.project_id
+      ? projectModel
+          .get(body.project_id)
+          .then(project => {
+            res.json(project);
+          })
+
+          // .catch(err => {
+          //   res.status(404).json({ err: "project id not found" });
+          .catch(err)
+      : res.status(500).json({ message: "internal server error", error: err });
     next();
   }
 }
